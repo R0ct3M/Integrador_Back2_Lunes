@@ -1,6 +1,6 @@
 package com.example.FrankySabado.modelos;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -20,6 +20,11 @@ public class Estudiante {
 
     //Relacionandome con 1 Usuario
 
+    @OneToOne
+    @JoinColumn(name = "fk_usuario", referencedColumnName = "id")
+    @JsonBackReference(value = "relacionusuarioestudiante")
+    private Usuario usuario;
+
     public Estudiante() {
     }
 
@@ -32,7 +37,6 @@ public class Estudiante {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -40,7 +44,6 @@ public class Estudiante {
     public Double getPromedio() {
         return promedio;
     }
-
     public void setPromedio(Double promedio) {
         this.promedio = promedio;
     }
@@ -48,8 +51,16 @@ public class Estudiante {
     public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
-
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 }

@@ -7,6 +7,7 @@ import java.time.LocalDate;
 public class EstudianteDTO {
 
     private String nombre;
+    private String contrasena;
     private Roles rol;
     private Double promedio;
     private LocalDate fechaNacimiento;
@@ -14,8 +15,9 @@ public class EstudianteDTO {
     public EstudianteDTO() {
     }
 
-    public EstudianteDTO(String nombre, Roles rol, Double promedio, LocalDate fechaNacimiento) {
+    public EstudianteDTO(String nombre, String contrasena, Roles rol, Double promedio, LocalDate fechaNacimiento) {
         this.nombre = nombre;
+        this.contrasena = contrasena;
         this.rol = rol;
         this.promedio = promedio;
         this.fechaNacimiento = fechaNacimiento;
@@ -24,15 +26,16 @@ public class EstudianteDTO {
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    public String getContrasena() { return contrasena; }
+    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
+
     public Roles getRol() {
         return rol;
     }
-
     public void setRol(Roles rol) {
         this.rol = rol;
     }
@@ -40,7 +43,6 @@ public class EstudianteDTO {
     public Double getPromedio() {
         return promedio;
     }
-
     public void setPromedio(Double promedio) {
         this.promedio = promedio;
     }
@@ -48,7 +50,6 @@ public class EstudianteDTO {
     public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
-
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }

@@ -1,6 +1,7 @@
 package com.example.FrankySabado.modelos.mapas;
 
 import com.example.FrankySabado.modelos.Usuario;
+import com.example.FrankySabado.modelos.dtos.UsuarioEspecialDTO;
 import com.example.FrankySabado.modelos.dtos.UsuarioGenericoDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,16 +12,13 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface IMapaUsuarioDTO {
 
-    IMapaUsuarioDTO INSTANCE= Mappers.getMapper(IMapaUsuarioDTO.class);
+    //de DTO de entrada a entidad(Guarda o actualiza)
+    @Mapping(target = "id", ignore = true) //La BD genera el ID
+    Usuario convertirAEntidad(UsuarioGenericoDTO dto);
 
-    //Convirtiendo un modelo en DTO
+    //de entidad a DTO de salida
+    UsuarioEspecialDTO convertirADTO(Usuario usuario);
 
-
-    @Mapping(source = "nombre", target = "nombre")
-    @Mapping(source = "correo", target = "correo")
-    @Mapping(source = "rol", target = "rol")
-    UsuarioGenericoDTO convertirADTO(Usuario usuario);
-
-    List<UsuarioGenericoDTO> convertirListaDTO(List<Usuario> lista);
+    List<UsuarioEspecialDTO> convertirListaDTO(List<Usuario> lista);
 
 }

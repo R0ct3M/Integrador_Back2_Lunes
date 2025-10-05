@@ -1,7 +1,9 @@
 package com.example.FrankySabado.controladores;
 
 import com.example.FrankySabado.modelos.Usuario;
+import com.example.FrankySabado.modelos.dtos.UsuarioGenericoDTO;
 import com.example.FrankySabado.servicios.UsuarioServicio;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +19,11 @@ public class UsuarioControlador {
     //Por cada metodo del servicio se programa
     //un metodo del controlador
     @PostMapping
-    public ResponseEntity<?> activarServicioGuardar(@RequestBody Usuario datosQueEnviaJossy){
+    public ResponseEntity<?> activarServicioGuardar(@Valid @RequestBody UsuarioGenericoDTO datosUsuario){
         try{
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(this.servicio.guardarUsuario(datosQueEnviaJossy));
+                    .body(this.servicio.guardarUsuario(datosUsuario));
         }catch(Exception error){
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)

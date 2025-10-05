@@ -1,6 +1,7 @@
 package com.example.FrankySabado.modelos;
 
 import com.example.FrankySabado.ayudas.Parentescos;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,9 +18,12 @@ public class Familiar {
     @Column(name = "direccion", nullable = false, unique = false, length = 150)
     private String direccion;
 
-    public Familiar(){
+    @ManyToOne
+    @JoinColumn(name = "fk_usuario", referencedColumnName = "id")
+    @JsonBackReference(value = "relacionusuariofamiliar")
+    private Usuario usuario;
 
-    }
+    public Familiar(){}
 
     public Familiar(Integer id, Parentescos parentesco, String telefono, String direccion) {
         this.id = id;

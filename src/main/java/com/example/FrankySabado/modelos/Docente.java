@@ -2,6 +2,7 @@ package com.example.FrankySabado.modelos;
 
 import com.example.FrankySabado.ayudas.Estados;
 import com.example.FrankySabado.ayudas.Roles;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -23,8 +24,12 @@ public class Docente {
     @Enumerated(EnumType.STRING)
     private Estados estados;
 
-    public Docente() {
-    }
+    @OneToOne
+    @JoinColumn(name = "fk_usuario", referencedColumnName = "id")
+    @JsonBackReference(value = "relacionusuariodocente")
+    private Usuario usuario;
+
+    public Docente() { }
 
     public Docente(Integer id, String nombre, String correo, String contraseña, Roles rol, Estados estados) {
         this.id = id;

@@ -1,5 +1,6 @@
 package com.example.FrankySabado.repositorios;
 
+import com.example.FrankySabado.ayudas.Roles;
 import com.example.FrankySabado.modelos.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,9 @@ public interface IUsuarioRepositorio extends JpaRepository<Usuario,Integer> {
 
     //Buscando los usuarios cuyo correo comience por :
     List<Usuario> findByCorreoStartingWith(String correo);
+
+    //Buscando un usuario por rol
+    List<Usuario> findByRol(Roles rol);
 
 
 }

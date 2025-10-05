@@ -15,7 +15,7 @@ public interface IMapaEstudianteDTO {
 
     //Mapeando un modelo a DTO
     @Mapping(source="usuario.nombre", target="nombre")
-    @Mapping(source="usuario.contraseña", target="contraseña")
+    @Mapping(source="usuario.contrasena", target="contrasena")
     @Mapping(source="usuario.rol", target="rol")
     @Mapping(source="promedio", target="promedio")
     @Mapping(source="fechaNacimiento", target="fechaNacimiento")

@@ -1,6 +1,7 @@
 package com.example.FrankySabado.servicios;
 
 import com.example.FrankySabado.modelos.Usuario;
+import com.example.FrankySabado.modelos.dtos.UsuarioEspecialDTO;
 import com.example.FrankySabado.modelos.dtos.UsuarioGenericoDTO;
 import com.example.FrankySabado.modelos.mapas.IMapaUsuarioDTO;
 import com.example.FrankySabado.repositorios.IUsuarioRepositorio;
@@ -16,15 +17,22 @@ public class UsuarioServicio {
     //1. Llamar al repositorio
     //INYECTAR UNA DEPENDENCIA AL REPO
     @Autowired
-    IUsuarioRepositorio repositorio;
+    private IUsuarioRepositorio repositorio;
 
     @Autowired
-    IMapaUsuarioDTO mapa;
+    private IMapaUsuarioDTO mapa;
 
     //1. Servicio para guardar un usuario
-    public UsuarioGenericoDTO guardarUsuario(Usuario datosUsuario)throws Exception{
+    public UsuarioEspecialDTO guardarUsuario(UsuarioGenericoDTO datosUsuario)throws Exception{
         try{
-            return this.mapa.convertirADTO(this.repositorio.save(datosUsuario));
+            //validar correo.
+            if (repositorio.findByCorreo(datosUsuario.getCorreo()).isPresent()) {
+                throw new Exception("Este correo ya ha sido registrado.");
+            }
+
+            Usuario usuarioEntidad = mapa.convertirAEntidad(datosUsuario);
+            Usuario usurioGuardado = this.repositorio.save(usuarioEntidad);
+            return this.mapa.convertirADTO(usurioGuardado);
 
         }catch(Exception error){
             throw new Exception("upss fallamos "+error.getMessage());
@@ -32,18 +40,19 @@ public class UsuarioServicio {
     }
 
     //2. Servicio para buscar Todos los usuarios
-    public List<UsuarioGenericoDTO> buscarUsuarios()throws Exception{
+    public List<UsuarioEspecialDTO> buscarUsuarios()throws Exception{
         try{
-            return this.mapa.convertirListaDTO(this.repositorio.findAll());
+            List<Usuario> listausuarios = repositorio.findAll();
+            return this.mapa.convertirListaDTO(listausuarios);
         }catch(Exception error){
             throw new Exception("upss fallamos "+error.getMessage());
         }
     }
 
     //3. Servicio para buscar un usuario si me dan su ID
-    public UsuarioGenericoDTO buscarUsuarioPorId(Integer id)throws Exception{
+    public UsuarioEspecialDTO buscarUsuarioPorId(Integer id)throws Exception{
         try{
-            Optional<Usuario>usuarioBuscado=this.repositorio.findById(id);
+            Optional<Usuario>usuarioBuscado= this.repositorio.findById(id);
             if(usuarioBuscado.isPresent()){ //SI SI ESTA
                 return this.mapa.convertirADTO(usuarioBuscado.get());
             }else{ //SI NO ESTA
@@ -55,9 +64,9 @@ public class UsuarioServicio {
     }
 
     //Buscar por correo
-    public UsuarioGenericoDTO buscarUsuarioPorCorreo(String correo)throws Exception{
+    public UsuarioEspecialDTO buscarUsuarioPorCorreo(String correo)throws Exception{
         try{
-            Optional<Usuario>usuarioBuscado=this.repositorio.findByCorreo(correo);
+            Optional<Usuario>usuarioBuscado = this.repositorio.findByCorreo(correo);
             if(usuarioBuscado.isPresent()){ //SI SI ESTA
                 return this.mapa.convertirADTO(usuarioBuscado.get());
             }else{ //SI NO ESTA
@@ -67,9 +76,5 @@ public class UsuarioServicio {
             throw new Exception("upss fallamos "+error.getMessage());
         }
     }
-
-
-
-
 
 }

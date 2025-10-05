@@ -1,6 +1,7 @@
 package com.example.FrankySabado.modelos;
 
 import com.example.FrankySabado.ayudas.SectorEmpresa;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,8 +22,12 @@ public class Empresario {
     @Column(name = "departamento", nullable = false)
     private String departamento;
 
-    public Empresario() {
-    }
+    @OneToOne
+    @JoinColumn(name = "fk_usuario", referencedColumnName = "id")
+    @JsonBackReference(value = "relacionusuarioempresario")
+    private Usuario usuario;
+
+    public Empresario() {}
 
     public Empresario(Integer id, String nombre, SectorEmpresa sector, String departamento) {
         Id = id;
